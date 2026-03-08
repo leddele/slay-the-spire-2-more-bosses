@@ -1,0 +1,55 @@
+{
+    "author": "Alchyr",
+    "name": "Slay the Spire 2 Mod",
+    "description": "A Slay the Spire 2 mod relying on Basis",
+    "identity": "Alchyr.Sts2Mod",
+    "shortName": "alchyrsts2mod",
+    "tags": {
+        "language": "C#",
+        "type": "project"
+    },
+    "sourceName": "ModTemplate",
+    "sources": [
+        {
+            "exclude":[
+                ".git/**",
+                ".godot/**",
+                ".idea/**",
+                "README.md"
+            ]
+        }
+    ],
+    "symbols": {
+        "ModAuthor":{
+            "type": "parameter",
+            "dataType": "string",
+            "defaultValue": "Name",
+            "isRequired": "true",
+            "replaces": "ModAuthor"
+        },
+        "PublicizeSts":{
+            "type": "parameter",
+            "dataType":"bool",
+            "defaultValue": "false",
+            "replaces": "PublicizeSts",
+            "description": "If enabled, private and protected symbols in the Slay the Spire 2 .dll will be publicized."
+        },
+        "NullableChecks":{
+            "type": "parameter",
+            "dataType":"choice",
+            "defaultValue": "false",
+            "replaces": "NullableChecks",
+            "enableQuotelessLiterals": true,
+            "choices": [
+                {
+                    "choice": "enable",
+                    "description": "More strict handling of possibly null values."
+                },
+                {
+                    "choice": "disable",
+                    "description": ""
+                }
+            ]
+        }
+    }
+}

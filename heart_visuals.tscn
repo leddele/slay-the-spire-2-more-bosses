@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://buug6ju26wdg1"]
+
+[ext_resource type="Texture2D" uid="uid://bi35x3u84f1pv" path="res://mods/Sts1Content/images/monsters/heart/heart_static.png" id="1_tex"]
+[ext_resource type="Script" path="res://mods/Sts1Content/HeartVisuals.cs" id="2_script"]
+
+[node name="HeartVisuals" type="Node2D"]
+script = ExtResource("2_script")
+
+[node name="SpineBody" type="MegaSprite" parent="."]
+# 这是一个空的 Spine 节点，仅仅为了骗过代码里的 visuals.SpineBody 检查
+
+[node name="StaticImage" type="Sprite2D" parent="."]
+position = Vector2(0, 0)
+scale = Vector2(5, 5)
+texture = ExtResource("1_tex")

@@ -1,0 +1,76 @@
+﻿<Project Sdk="Godot.NET.Sdk/4.5.1">
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>true</ImplicitUsings>
+        <Nullable>enable</Nullable> 
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        
+        <!-- 【关键】强制生成的文件名为 Sts1Content.dll -->
+        <AssemblyName>Sts1Content</AssemblyName>
+    </PropertyGroup>
+
+    <!-- OS Detection (保持原样) -->
+    <PropertyGroup>
+        <IsWindows>false</IsWindows>
+        <IsWindows Condition="$([MSBuild]::IsOSPlatform('Windows'))">true</IsWindows>
+    </PropertyGroup>
+
+    <!-- Windows 路径配置 -->
+    <PropertyGroup Condition="'$(IsWindows)' == 'true'">
+        <!-- 自动寻找 Steam 路径，如果找不到，下面会手动指定 -->
+        <SteamRoot>$(registry:HKEY_CURRENT_USER\Software\Valve\Steam@SteamPath)</SteamRoot>
+        <Sts2Path>F:\steam\steamapps\common\Slay the Spire 2</Sts2Path>
+        <Sts2DataDir>$(Sts2Path)/data_sts2_windows_x86_64</Sts2DataDir>
+        <!-- 【手动指定你的 Godot 路径】 -->
+        <GodotPath>H:\Godot_v4.5.1-stable_mono_win64\Godot_v4.5.1-stable_mono_win64\Godot_v4.5.1-stable_mono_win64.exe</GodotPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Reference Include="0Harmony">
+            <HintPath>$(Sts2DataDir)/0Harmony.dll</HintPath>
+        </Reference>
+        <Reference Include="sts2">
+            <HintPath>$(Sts2DataDir)/sts2.dll</HintPath>
+            <Publicize>PublicizeSts</Publicize>
+        </Reference>
+        <!-- 引用 BaseLib -->
+        <Reference Include="BaseLib">
+            <HintPath>$(Sts2Path)/mods/BaseLib.dll</HintPath>
+        </Reference>
+
+        <PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="*" />
+        <!-- 本地化文件分析：指向你的 localization 文件夹 -->
+        <AdditionalFiles Include="localization/**/*.json"/>
+    </ItemGroup>
+
+    <!-- 移除模板自带的过滤规则，确保你的代码能被编译 -->
+    <ItemGroup>
+   
+        <None Include="mod_manifest.json" />
+        <None Include="project.godot"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.3">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <!-- 自动部署逻辑：编译后自动把 dll 和 manifest 拷进子文件夹 -->
+    <Target Name="CopyToModsFolderOnBuild" AfterTargets="PostBuildEvent">
+        <PropertyGroup>
+            <DestDir>$(Sts2Path)\mods\Sts1Content\</DestDir>
+        </PropertyGroup>
+        <Message Text="正在部署 Mod 到: $(DestDir)" Importance="high" />
+        <MakeDir Directories="$(DestDir)" />
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(DestDir)" />
+        <Copy SourceFiles="mod_manifest.json" DestinationFolder="$(DestDir)" Condition="Exists('mod_manifest.json')" />
+    </Target>
+
+    <!-- 自动导出 PCK (当你使用 dotnet publish 命令时触发) -->
+    <Target Name="GodotPublish" AfterTargets="Publish" Condition="'$(GodotPath)' != '' and Exists('$(GodotPath)')">
+        <Message Text="正在导出 PCK..." Importance="high"/>
+        <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;Windows Desktop&quot; &quot;$(Sts2Path)/mods/Sts1Content/Sts1Content.pck&quot;" />
+    </Target>
+</Project>

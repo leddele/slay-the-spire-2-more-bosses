@@ -1,0 +1,11 @@
+{
+"id": "Sts1Content",
+  "name": "Slay the Spire 1 Bosses",
+  "author": "leddele",
+  "description": "从一代移植的心脏 Boss 模组，需要 BaseLib 支持。",
+  "version": "1.0.0",
+  "entry_point": "Sts1Content.MainFile",
+  "dll_name": "Sts1Content.dll",
+  "pck_name": "Sts1Content",
+  "dependencies": ["BaseLib"]
+}
