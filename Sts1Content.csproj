@@ -40,7 +40,7 @@
 
         <PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="*" />
         <!-- 本地化文件分析：指向你的 localization 文件夹 -->
-        <AdditionalFiles Include="localization/**/*.json"/>
+        <AdditionalFiles Include="Sts1Content/localization/**/*.json"/>
     </ItemGroup>
 
     <!-- 移除模板自带的过滤规则，确保你的代码能被编译 -->

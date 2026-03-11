@@ -1,7 +1,6 @@
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Acts;
-using MegaCrit.Sts2.Core.Nodes.Rooms;
 using System.Collections.Generic;
 using System.Linq;
 using MySts1Mod.Encounters;
@@ -16,11 +15,23 @@ public static class ActMonsterPoolPatch
     public static void Postfix(ref IEnumerable<EncounterModel> __result)
     {
         var list = __result.ToList();
-        var heartBoss = ModelDb.Encounter<CorruptHeartBossEncounter>();
-        var archBoss = ModelDb.Encounter<TheArchitectBossEncounter>();
-        
-        if (heartBoss != null && !list.Contains(heartBoss)) list.Add(heartBoss);
-        if (archBoss != null && !list.Contains(archBoss)) list.Add(archBoss);
+
+        // 批量获取所有自定义 BOSS 遭遇
+        var customBosses = new List<EncounterModel?> {
+            ModelDb.Encounter<TheArchitectBossEncounter>(),
+            ModelDb.Encounter<CorruptHeartBossEncounter>(),
+            ModelDb.Encounter<TimeEaterBossEncounter>(),
+            ModelDb.Encounter<AwakenedOneBossEncounter>(),
+            ModelDb.Encounter<DonuDecaBossEncounter>()
+        };
+
+        foreach (var boss in customBosses)
+        {
+            if (boss != null && !list.Contains(boss))
+            {
+                list.Add(boss);
+            }
+        }
 
         __result = list;
     }

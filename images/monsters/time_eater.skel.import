@@ -1,0 +1,14 @@
+[remap]
+
+importer="spine.skel"
+type="SpineSkeletonFileResource"
+uid="uid://c0x1cbmw8lfuc"
+path="res://.godot/imported/time_eater.skel-66ede2301372562c46733049f62a885b.spskel"
+
+[deps]
+
+source_file="res://images/monsters/time_eater.skel"
+dest_files=["res://.godot/imported/time_eater.skel-66ede2301372562c46733049f62a885b.spskel"]
+
+[params]
+

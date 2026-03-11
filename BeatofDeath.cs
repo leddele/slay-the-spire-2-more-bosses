@@ -11,28 +11,28 @@ namespace MySts1Mod.Powers;
 
 public sealed class BeatOfDeathPower : CustomPowerModel
 {
-    public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Counter;
+	public override PowerType Type => PowerType.Buff;
+	public override PowerStackType StackType => PowerStackType.Counter;
 
 
-    public override string CustomPackedIconPath => "res://images/powers/" + Id.Entry.RemovePrefix().ToLowerInvariant() + ".png";
-    public override string CustomBigIconPath => "res://images/powers/" + Id.Entry.RemovePrefix().ToLowerInvariant() + ".png";
+	public override string CustomPackedIconPath => "res://images/powers/" + Id.Entry.RemovePrefix().ToLowerInvariant() + ".png";
+	public override string CustomBigIconPath => "res://images/powers/" + Id.Entry.RemovePrefix().ToLowerInvariant() + ".png";
 
-    public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
-    {
-        var player = cardPlay.Card.Owner;
-        if (player != null)
-        {
-            this.Flash();
-            var sourceMonster = base.Owner.Monster; 
-            if (sourceMonster != null)
-            {
-                await DamageCmd.Attack(base.Amount).FromMonster(sourceMonster).Execute(context);
-            }
-            else
-            {
-                await DamageCmd.Attack(base.Amount).Execute(context);
-            }
-        }
-    }
+	public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
+	{
+		var player = cardPlay.Card.Owner;
+		if (player != null)
+		{
+			this.Flash();
+			var sourceMonster = base.Owner.Monster; 
+			if (sourceMonster != null)
+			{
+				await DamageCmd.Attack(base.Amount).FromMonster(sourceMonster).Execute(context);
+			}
+			else
+			{
+				await DamageCmd.Attack(base.Amount).Execute(context);
+			}
+		}
+	}
 }
