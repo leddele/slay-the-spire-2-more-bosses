@@ -98,7 +98,7 @@ public sealed class Donu : MonsterModel
     {
         await CreatureCmd.TriggerAnim(this.Creature, "Buff", 0.5f);
         
-        // 【核心修复】使用 Enemies 获取实时战斗中的所有敌人
+   
         foreach (var m in base.CombatState.Enemies)
         {
             await PowerCmd.Apply<StrengthPower>(m, (decimal)StrengthGain, this.Creature, null);

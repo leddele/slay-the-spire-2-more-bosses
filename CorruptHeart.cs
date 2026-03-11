@@ -24,7 +24,7 @@ using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Vfx.Utilities;
 using Sts1Content; 
 using MySts1Mod.Powers; 
-// 为虚空牌起个别名，防止和 System.Void 冲突
+
 using StsVoidCard = MegaCrit.Sts2.Core.Models.Cards.Void; 
 
 namespace MySts1Mod.Monsters;
@@ -33,7 +33,6 @@ public sealed class CorruptHeart : MonsterModel
 {
     private int _buffCount = 0;
 
-    // --- 数值配置 ---
     public override int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 900, 800);
     public override int MaxInitialHp => MinInitialHp;
 
@@ -41,8 +40,7 @@ public sealed class CorruptHeart : MonsterModel
     private int BloodShotsCount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 16, 12);
     private int EchoDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 45, 40);
 
-    // --- 视觉资源配置 ---
-    // 这里指向一个占位场景，实际显示由 SetupSkins 控制
+  
     protected override string VisualsPath => "res://scenes/creature_visuals/architect.tscn";
 
     public override void SetupSkins(NCreatureVisuals visuals)

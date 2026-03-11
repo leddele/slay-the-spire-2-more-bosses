@@ -19,11 +19,10 @@ public sealed class UnawakenedPower : CustomPowerModel
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
 
-    // --- 修改为动态路径模式 ---
     public override string CustomPackedIconPath => "res://images/powers/" + Id.Entry.RemovePrefix().ToLowerInvariant() + ".png";
     public override string CustomBigIconPath => "res://images/powers/" + Id.Entry.RemovePrefix().ToLowerInvariant() + ".png";
 
-    // --- 保留你要求的原始图像加载逻辑 ---
+ 
     public new Texture2D Icon {
         get {
             string path = ProjectSettings.GlobalizePath(CustomPackedIconPath);

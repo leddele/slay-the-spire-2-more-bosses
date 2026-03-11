@@ -44,7 +44,7 @@ public sealed class TimeEater : MonsterModel
     private int ReverbDmg => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 8, 7);
     private int HeadSlamDmg => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 32, 26);
 
-    // 【核心】借用原版建筑师的场景
+ 
     protected override string VisualsPath => "res://scenes/creature_visuals/architect.tscn";
 
     public override void SetupSkins(NCreatureVisuals visuals)
@@ -64,15 +64,15 @@ public sealed class TimeEater : MonsterModel
             Sprite2D teSprite = new Sprite2D();
             teSprite.Name = "TimeEaterSprite";
       
-            // 注意：这里要匹配你 PCK 里的路径和文件名（根据你之前的截图，文件名首字母大写）
+          
             string imgPath = "res://images/monsters/time_eater.png";
             var tex = GD.Load<Texture2D>(imgPath);
 
             if (tex != null)
             {
                 teSprite.Texture = tex;
-                teSprite.Scale = new Vector2(3.0f, 3.0f); // 放大 3 倍，可自行调整
-                teSprite.Position = new Vector2(0, -200); // 向上偏移对齐
+                teSprite.Scale = new Vector2(3.0f, 3.0f); 
+                teSprite.Position = new Vector2(0, -200); 
                 visuals.AddChild(teSprite);
             }
             else

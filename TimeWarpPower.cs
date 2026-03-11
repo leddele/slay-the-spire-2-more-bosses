@@ -76,8 +76,7 @@ public sealed class TimeWarpPower : CustomPowerModel
                 // C. 阈值递减 (最低 6)
                 data.threshold = Math.Max(6, data.threshold - 1);
 
-                // 【核心修复】DynamicVars 是一个 KeyValuePair 集合
-                // pair.Key 是变量名，pair.Value 是具体的 DynamicVar 对象
+           
                 foreach (var pair in this.DynamicVars)
                 {
                     if (pair.Key == "Threshold")

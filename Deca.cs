@@ -21,7 +21,7 @@ using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.ValueProps;
 using MegaCrit.Sts2.Core.Combat;
-// 【关键修复】PileType 和 CardPilePosition 的真正命名空间
+
 using MegaCrit.Sts2.Core.Entities.Cards; 
 
 using Sts1Content;
@@ -67,7 +67,7 @@ public sealed class Deca : MonsterModel
         decimal artifactAmt = AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 5m, 4m);
         await PowerCmd.Apply<ArtifactPower>(this.Creature, artifactAmt, this.Creature, null);
 
-        // 调整位置
+
         await Cmd.Wait(0.2f);
         var room = NCombatRoom.Instance;
         if (room != null) {
@@ -94,7 +94,7 @@ public sealed class Deca : MonsterModel
     {
         await CreatureCmd.TriggerAnim(this.Creature, "Buff", 0.5f);
         
-        // 【修正】使用 Enemies 获取全场敌人
+      
         foreach (var m in base.CombatState.Enemies)
         {
             await CreatureCmd.GainBlock(m, (decimal)ProtectBlock, ValueProp.Unpowered, null);
@@ -112,7 +112,7 @@ public sealed class Deca : MonsterModel
         {
             if (t.Player is Player player) 
             {
-                // 现在 PileType 和 CardPilePosition 已经可以识别了
+              
                 await CardPileCmd.AddGeneratedCardToCombat(base.CombatState.CreateCard<Dazed>(player), PileType.Discard, false, CardPilePosition.Top);
                 await CardPileCmd.AddGeneratedCardToCombat(base.CombatState.CreateCard<Dazed>(player), PileType.Discard, false, CardPilePosition.Top);
                  await CardPileCmd.AddGeneratedCardToCombat(base.CombatState.CreateCard<Dazed>(player), PileType.Discard, false, CardPilePosition.Top);

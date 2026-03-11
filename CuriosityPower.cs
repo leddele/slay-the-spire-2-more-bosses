@@ -35,7 +35,7 @@ public sealed class CuriosityPower : CustomPowerModel
         if (cardPlay.Card.Owner != null && cardPlay.Card.Type == CardType.Power)
         {
             this.Flash();
-            // 现在 StrengthPower 可以被识别了
+          
             await PowerCmd.Apply<StrengthPower>(base.Owner, (decimal)base.Amount, base.Owner, null);
         }
     }

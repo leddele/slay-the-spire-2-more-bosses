@@ -36,7 +36,7 @@ public sealed class AwakenedOne : MonsterModel
     public int Phase = 1; 
     private bool _firstTurnP2 = true;
 
-    // 【新增变量】用于“快照”保存一阶段的力量和再生值
+
     private decimal _savedStrength = 0m;
     private decimal _regenAmount = 0m;
 
@@ -47,8 +47,7 @@ public sealed class AwakenedOne : MonsterModel
 
     public async Task TriggerFakeDeath()
     {
-        // 1. 【核心修复：快照力量】
-        // 在引擎把 Buff 清空之前，赶紧把当前的力量值记录下来
+      
         var strPower = this.Creature.GetPower<StrengthPower>();
         if (strPower != null)
         {
@@ -103,7 +102,7 @@ public sealed class AwakenedOne : MonsterModel
         await PowerCmd.Apply<CuriosityPower>(this.Creature, curiosity, this.Creature, null);
         await PowerCmd.Apply<UnawakenedPower>(this.Creature, 1m, this.Creature, null);
 
-        // 记录再生数值，方便二阶段补发
+     
         _regenAmount = AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 30m, 20m);
         await PowerCmd.Apply<RegenPower>(this.Creature, _regenAmount, this.Creature, null);
 
@@ -182,14 +181,14 @@ public sealed class AwakenedOne : MonsterModel
         
         await CreatureCmd.Heal(base.Creature, (decimal)this.MaxInitialHp);
         
-        // 移除不该带入二阶段的旧 Buff (如果有残留)
+     
         if (this.Creature.HasPower<UnawakenedPower>()) await PowerCmd.Remove(this.Creature.GetPower<UnawakenedPower>());
         if (this.Creature.HasPower<CuriosityPower>()) await PowerCmd.Remove(this.Creature.GetPower<CuriosityPower>());
         
         var debuffs = base.Creature.Powers.Where(p => p.Type == PowerType.Debuff).ToList();
         foreach (var p in debuffs) await PowerCmd.Remove(p);
 
-        // 2. 【核心修复：补发力量与再生】
+    
         if (_savedStrength > 0)
         {
             await PowerCmd.Apply<StrengthPower>(this.Creature, _savedStrength, this.Creature, null);
